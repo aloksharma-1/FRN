@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Fire N Grill</string>
+    <string name="user_name">User Name</string>
+    <string name="upload_image">Upload Image</string>
+    <string name="signout">Signout</string>
+    <string name="default_web_client_id">AIzaSyDnE6OMBKpS5dE2JrM1qdPH86qEsYwTvNs</string>
+
+</resources>
