@@ -1,9 +1,18 @@
 <resources>
     <string name="app_name">Fire N Grill</string>
-    <string name="user_name">User Name</string>
-    <string name="upload_image">Upload Image</string>
     <string name="signout">Signout</string>
     <string name="default_web_client_id">AIzaSyDnE6OMBKpS5dE2JrM1qdPH86qEsYwTvNs</string>
-    <string name="already_have_account_login">Already have Account ? Login</string>
-
+    <string name="upload_image">Upload Image</string>
+    <string name="user_name">User Name</string>
+    <string name="phone_hint">+91 000000000</string>
+    <string name="email_hint">E-mail</string>
+    <string name="password_hint">Password</string>
+    <string name="register">Register</string>
+    <string name="sign_in">Sign in</string>
+    <string name="or_with">Or with</string>
+    <string name="or_sign_in_with">Or sign in with</string>
+    <string name="already_have_account_login">Already have an account? Login</string>
+    <string name="create_account_prompt">Want to create an account?</string>
+    <string name="profile_image_desc">Profile Image</string>
+    <string name="logo_description">App logo</string>
 </resources>
