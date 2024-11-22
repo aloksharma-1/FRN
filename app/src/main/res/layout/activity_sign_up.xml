@@ -152,9 +152,10 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="30dp"
                     android:gravity="center"
-                    android:text="Already have Account ? Login"
+                    android:text="@string/already_have_account_login"
                     android:textColor="@color/black"
-                    android:textStyle="bold"></TextView>
+                    android:textStyle="bold">
+                </TextView>
 
 
             </LinearLayout>
