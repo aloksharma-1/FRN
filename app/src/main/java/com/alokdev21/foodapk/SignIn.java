@@ -19,14 +19,12 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 public class SignIn extends AppCompatActivity {
-    TextView tvsignup;
-    EditText outputemail, outputpassword;
-    Button btnsignin;
-    String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
-    ProgressDialog progressDialog;
-    FirebaseAuth mAuth;
-    FirebaseUser mUser;
-    SharedPreferencesManager sessionManager;
+    private TextView tvsignup, txtforgot;
+    private EditText outputemail, outputpassword;
+    private Button btnsignin;
+    private ProgressDialog progressDialog;
+    private FirebaseAuth mAuth;
+    private SharedPreferencesManager sessionManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,20 +33,29 @@ public class SignIn extends AppCompatActivity {
 
         // Initialize views
         tvsignup = findViewById(R.id.tvSignup);
+        txtforgot = findViewById(R.id.forgottxt); // Initialize forgot password text
         outputemail = findViewById(R.id.editTextTextEmailAddress);
         outputpassword = findViewById(R.id.editTextTextPassword);
         btnsignin = findViewById(R.id.buttonsignin);
 
-        progressDialog = new ProgressDialog(this);
+        // Initialize FirebaseAuth and SharedPreferencesManager
         mAuth = FirebaseAuth.getInstance();
         sessionManager = new SharedPreferencesManager(this);
 
-        // Check session and redirect to Home if logged in
-        if (sessionManager.isLoggedIn()) {
+        // Initialize progress dialog
+        progressDialog = new ProgressDialog(this);
+
+        // Check if user is already logged in, redirect to Home if so
+        if (mAuth.getCurrentUser() != null) {
             redirectToHomeScreen();
         }
 
-        // Handle Sign Up button click
+        // Set up button click listeners
+        setUpButtonListeners();
+    }
+
+    private void setUpButtonListeners() {
+        // Sign Up button click listener
         tvsignup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -57,7 +64,16 @@ public class SignIn extends AppCompatActivity {
             }
         });
 
-        // Handle Sign In button click
+        // Forgot Password button click listener
+        txtforgot.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(SignIn.this, Forgot.class);
+                startActivity(intent);
+            }
+        });
+
+        // Sign In button click listener
         btnsignin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -67,43 +83,48 @@ public class SignIn extends AppCompatActivity {
     }
 
     private void performLogin() {
-        String email = outputemail.getText().toString();
-        String password = outputpassword.getText().toString();
+        String email = outputemail.getText().toString().trim();
+        String password = outputpassword.getText().toString().trim();
 
-        if (!email.matches(emailPattern)) {
+        // Input validation
+        if (!email.matches("[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+")) {
             outputemail.setError("Enter a valid email");
+            outputemail.requestFocus();
         } else if (password.isEmpty() || password.length() < 6) {
-            outputpassword.setError("Please enter a valid password");
+            outputpassword.setError("Password must be at least 6 characters");
+            outputpassword.requestFocus();
         } else {
-            progressDialog.setMessage("Please wait while Logging in...");
-            progressDialog.setTitle("Login");
+            // Show progress dialog
+            progressDialog.setMessage("Logging in...");
+            progressDialog.setTitle("Please wait");
             progressDialog.setCanceledOnTouchOutside(false);
             progressDialog.show();
 
-            mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                @Override
-                public void onComplete(@NonNull Task<AuthResult> task) {
-                    if (task.isSuccessful()) {
-                        progressDialog.dismiss();
-                        Toast.makeText(SignIn.this, "Login successful", Toast.LENGTH_SHORT).show();
+            // Sign in with Firebase
+            mAuth.signInWithEmailAndPassword(email, password)
+                    .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            progressDialog.dismiss();
+                            if (task.isSuccessful()) {
+                                Toast.makeText(SignIn.this, "Login successful!", Toast.LENGTH_SHORT).show();
 
-                        // Save login state
-                        sessionManager.setLogin(true);
-
-                        // Redirect to Home screen
-                        redirectToHomeScreen();
-                    } else {
-                        progressDialog.dismiss();
-                        Toast.makeText(SignIn.this, "" + task.getException(), Toast.LENGTH_SHORT).show();
-                    }
-                }
-            });
+                                // Save login state and redirect
+                                sessionManager.setLogin(true);
+                                redirectToHomeScreen();
+                            } else {
+                                String errorMessage = task.getException() != null ? task.getException().getMessage() : "Login failed";
+                                Toast.makeText(SignIn.this, errorMessage, Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
         }
     }
 
     private void redirectToHomeScreen() {
-        Intent intent = new Intent(SignIn.this, Home.class); // Replace with your home screen activity
+        Intent intent = new Intent(SignIn.this, Home.class); // Replace with your actual home screen activity
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
+        finish(); // Finish the current activity so the user can't navigate back to the login screen
     }
 }

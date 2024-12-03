@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -11,32 +12,51 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class Home extends AppCompatActivity {
     private FirebaseAuth mAuth;
-    Button btnSignout;
+    private Button btnSignout,demobutton;
+    private SharedPreferencesManager sessionManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        // Initialize FirebaseAuth
+        // Initialize FirebaseAuth and SharedPreferencesManager
         mAuth = FirebaseAuth.getInstance();
+        sessionManager = new SharedPreferencesManager(this);
 
-        // Initialize the button using findViewById
-        btnSignout = findViewById(R.id.ButtonSignout); // Make sure this matches the button id in your layout
+        // Check if user is not logged in, redirect to SignIn activity
+        if (mAuth.getCurrentUser() == null) {
+            redirectToSignInScreen();
+        }
 
-        // Set up the button click listener
+        // Initialize the sign-out button and set its listener
+        btnSignout = findViewById(R.id.ButtonSignout);
+        demobutton = findViewById(R.id.demo);
+        demobutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Home.this, demo1.class);
+                startActivity(intent);
+            }
+        });
         btnSignout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // Sign out the user
                 mAuth.signOut();
+                sessionManager.logout(); // Clear session data
+                Toast.makeText(Home.this, "Signed out successfully", Toast.LENGTH_SHORT).show();
 
                 // Redirect to SignIn activity
-                Intent intent = new Intent(Home.this, SignIn.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(intent);
-                finish(); // Close the current activity
+                redirectToSignInScreen();
             }
         });
+    }
+
+    private void redirectToSignInScreen() {
+        Intent intent = new Intent(Home.this, SignIn.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+        finish(); // Close the current activity
     }
 }

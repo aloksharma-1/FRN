@@ -12,10 +12,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.FoodAPK"
         tools:targetApi="31">
+        <activity
+            android:name=".demo1"
+            android:exported="false" />
+        <activity
+            android:name=".Forgot"
+            android:exported="false" />
         <activity android:name=".Home" />
-        <activity android:name=".SignIn" />
-        <activity android:name=".SignUp" />
-        <activity android:name=".splashScreen"
+        <activity
+            android:name=".SignIn"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -23,6 +28,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".SignUp" />
+        <activity android:name=".demo" />
     </application>
 
 </manifest>

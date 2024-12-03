@@ -42,7 +42,7 @@
                 android:textSize="60sp" />
 
             <EditText
-                android:id="@+id/editTextTextEmailAddress"
+                android:id="@+id/editTextForgotEmail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="20dp"
@@ -53,66 +53,23 @@
                 android:inputType="textEmailAddress"
                 android:padding="10dp" />
 
-            <EditText
-                android:id="@+id/editTextTextPassword"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="20dp"
-                android:background="@drawable/backgroundeditview"
-                android:ems="10"
-                android:gravity="center"
-                android:hint="@string/password_hint"
-                android:inputType="textPassword"
-                android:padding="10dp" />
-
             <Button
-                android:id="@+id/buttonsignin"
+                android:id="@+id/buttonResetPassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="20dp"
                 android:background="@drawable/btn_gradientbright"
-                android:text="@string/sign_in"
+                android:text="Forgot Password"
                 android:textColor="@color/white"
                 android:textSize="18sp" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="20dp"
-                android:gravity="center"
-                android:orientation="horizontal">
-
-                <View
-                    android:layout_width="50dp"
-                    android:layout_height="1dp"
-                    android:layout_marginEnd="5dp"
-                    android:background="@color/startcolorgradient" />
-
-                <TextView
-                    android:id="@+id/forgottxt"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Forgot"
-                    android:gravity="center"
-                    android:padding="8dp"
-                    android:textColor="#2F82EA"
-                    android:textSize="20sp"/>
-
-                <View
-                    android:layout_width="50dp"
-                    android:layout_height="1dp"
-                    android:layout_marginStart="5dp"
-                    android:background="@color/startcolorgradient" />
-
-            </LinearLayout>
-
             <TextView
-                android:id="@+id/tvSignup"
+                android:id="@+id/txtBackToSignIn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="30dp"
                 android:gravity="center"
-                android:text="@string/create_account_prompt"
+                android:text="Want to Sign In"
                 android:textColor="#2F82EA"
                 android:textStyle="bold" />
 
