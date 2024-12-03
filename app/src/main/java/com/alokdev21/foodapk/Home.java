@@ -1,62 +1,62 @@
 package com.alokdev21.foodapk;
 
-import android.content.Intent;
-import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
-import android.widget.Toast;
-
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.viewpager2.widget.ViewPager2;
 
-import com.google.firebase.auth.FirebaseAuth;
+import android.os.Bundle;
+
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class Home extends AppCompatActivity {
-    private FirebaseAuth mAuth;
-    private Button btnSignout,demobutton;
-    private SharedPreferencesManager sessionManager;
+    private ViewPager2 ViewPager;
+    private BottomNavigationView bottomNavigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        // Initialize FirebaseAuth and SharedPreferencesManager
-        mAuth = FirebaseAuth.getInstance();
-        sessionManager = new SharedPreferencesManager(this);
+        // Initialize ViewPager2 and BottomNavigationView
+        ViewPager = findViewById(R.id.viewpager);
+        bottomNavigationView = findViewById(R.id.bottom_navigation);
 
-        // Check if user is not logged in, redirect to SignIn activity
-        if (mAuth.getCurrentUser() == null) {
-            redirectToSignInScreen();
-        }
+        // Set up the ViewPager with a custom adapter
+        ViewPagerAdapter adapter = new ViewPagerAdapter(this);
+        ViewPager.setAdapter(adapter);
 
-        // Initialize the sign-out button and set its listener
-        btnSignout = findViewById(R.id.ButtonSignout);
-        demobutton = findViewById(R.id.demo);
-        demobutton.setOnClickListener(new View.OnClickListener() {
+        // Sync BottomNavigationView with ViewPager2
+        bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
+            int id = item.getItemId();
+
+            if (id == R.id.nav_menu) {
+                ViewPager.setCurrentItem(0);
+            } else if (id == R.id.nav_cart) {
+                ViewPager.setCurrentItem(1);
+            } else if (id == R.id.nav_profile) {
+                ViewPager.setCurrentItem(2);
+            }
+
+            return true;
+        });
+
+        // Sync ViewPager2 with BottomNavigationView
+        ViewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
             @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(Home.this, demo1.class);
-                startActivity(intent);
+            public void onPageSelected(int position) {
+                super.onPageSelected(position);
+                switch (position) {
+                    case 0:
+                        bottomNavigationView.setSelectedItemId(R.id.nav_menu);
+                        break;
+                    case 1:
+                        bottomNavigationView.setSelectedItemId(R.id.nav_cart);
+                        break;
+                    case 2:
+                        bottomNavigationView.setSelectedItemId(R.id.nav_profile);
+                        break;
+                }
             }
         });
-        btnSignout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Sign out the user
-                mAuth.signOut();
-                sessionManager.logout(); // Clear session data
-                Toast.makeText(Home.this, "Signed out successfully", Toast.LENGTH_SHORT).show();
-
-                // Redirect to SignIn activity
-                redirectToSignInScreen();
-            }
-        });
-    }
-
-    private void redirectToSignInScreen() {
-        Intent intent = new Intent(Home.this, SignIn.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(intent);
-        finish(); // Close the current activity
     }
 }
+
