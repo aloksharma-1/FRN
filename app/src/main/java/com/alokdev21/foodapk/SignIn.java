@@ -16,7 +16,6 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 
 public class SignIn extends AppCompatActivity {
     private TextView tvsignup, txtforgot;
@@ -24,7 +23,6 @@ public class SignIn extends AppCompatActivity {
     private Button btnsignin;
     private ProgressDialog progressDialog;
     private FirebaseAuth mAuth;
-    private SharedPreferencesManager sessionManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,9 +36,8 @@ public class SignIn extends AppCompatActivity {
         outputpassword = findViewById(R.id.editTextTextPassword);
         btnsignin = findViewById(R.id.buttonsignin);
 
-        // Initialize FirebaseAuth and SharedPreferencesManager
+        // Initialize FirebaseAuth
         mAuth = FirebaseAuth.getInstance();
-        sessionManager = new SharedPreferencesManager(this);
 
         // Initialize progress dialog
         progressDialog = new ProgressDialog(this);
@@ -108,9 +105,6 @@ public class SignIn extends AppCompatActivity {
                             progressDialog.dismiss();
                             if (task.isSuccessful()) {
                                 Toast.makeText(SignIn.this, "Login successful!", Toast.LENGTH_SHORT).show();
-
-                                // Save login state and redirect
-                                sessionManager.setLogin(true);
                                 redirectToHomeScreen();
                             } else {
                                 String errorMessage = task.getException() != null ? task.getException().getMessage() : "Login failed";

@@ -13,7 +13,7 @@ import com.google.firebase.auth.FirebaseAuth;
 public class demo1 extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private Button btnSignout,demobutton;
-    private SharedPreferencesManager sessionManager;
+//    private SharedPreferencesManager sessionManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,7 +22,7 @@ public class demo1 extends AppCompatActivity {
 
         // Initialize FirebaseAuth and SharedPreferencesManager
         mAuth = FirebaseAuth.getInstance();
-        sessionManager = new SharedPreferencesManager(this);
+//        sessionManager = new SharedPreferencesManager(this);
 
         // Check if user is not logged in, redirect to SignIn activity
         if (mAuth.getCurrentUser() == null) {
@@ -44,7 +44,7 @@ public class demo1 extends AppCompatActivity {
             public void onClick(View v) {
                 // Sign out the user
                 mAuth.signOut();
-                sessionManager.logout(); // Clear session data
+                /*sessionManager.logout(); // Clear session data*/
                 Toast.makeText(demo1.this, "Signed out successfully", Toast.LENGTH_SHORT).show();
 
                 // Redirect to SignIn activity

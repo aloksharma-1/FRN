@@ -3,7 +3,7 @@
     <string name="signout">Signout</string>
     <string name="default_web_client_id">AIzaSyDnE6OMBKpS5dE2JrM1qdPH86qEsYwTvNs</string>
     <string name="upload_image">Upload Image</string>
-    <string name="user_name">User Name</string>
+    <string name="user_name">Name</string>
     <string name="phone_hint">+91 000000000</string>
     <string name="email_hint">E-mail</string>
     <string name="password_hint">Password</string>
@@ -24,4 +24,10 @@
     <string name="dish_name">Dish Name</string>
     <string name="_500_for_two">₹500 for two</string>
     <string name="price">price</string>
+    <string name="default_name">Name</string>
+    <string name="default_email">Email</string>
+    <string name="default_phone">Phone</string>
+    <string name="profile_picture">Profile Picture</string>
+    <string name="logout">Logout</string>
+
 </resources>
