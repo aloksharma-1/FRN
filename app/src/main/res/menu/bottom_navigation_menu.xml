@@ -6,10 +6,10 @@
         android:title="Menu Card" />
     <item
         android:id="@+id/nav_cart"
-        android:icon="@drawable/baseline_restaurant_menu_24"
+        android:icon="@drawable/baseline_shopping_cart_24"
         android:title="Cart" />
     <item
         android:id="@+id/nav_profile"
-        android:icon="@drawable/baseline_restaurant_menu_24"
+        android:icon="@drawable/baseline_person_24"
         android:title="Profile" />
 </menu>

@@ -1,58 +1,160 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    tools:context=".Profile_fragment"
+    android:orientation="vertical"
     android:padding="16dp">
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:gravity="center_horizontal">
+        android:layout_height="wrap_content">
 
-        <!-- Profile Picture -->
-        <ImageView
-            android:id="@+id/profile_image"
-            android:layout_width="120dp"
-            android:layout_height="120dp"
-            android:src="@drawable/profile"
-            android:scaleType="centerCrop"
-            android:layout_marginBottom="16dp"
-            android:contentDescription="@string/profile_picture" />
-
-        <!-- User Name -->
-        <TextView
-            android:id="@+id/tv_user_name"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:id="@+id/l2"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:textSize="20sp"
-            android:layout_marginBottom="8dp"
-            android:text="@string/default_name" />
+            android:orientation="vertical"
+            android:padding="8dp">
 
-        <!-- User Email -->
-        <TextView
-            android:id="@+id/tv_user_email"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="16sp"
-            android:text="@string/default_email" />
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/profile_image"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:src="@drawable/profile"
+                app:civ_border_color="@color/endcolorgradient"
+                app:civ_border_width="2dp"
+                android:contentDescription="@string/profile_image_desc"
+                android:scaleType="centerCrop"
+                android:layout_marginBottom="16dp"/>
 
-        <!-- User Phone -->
-        <TextView
-            android:id="@+id/tv_user_phone"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="16sp"
-            android:layout_marginTop="8dp"
-            android:text="@string/default_phone" />
+            <!-- Editable Name -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Name"
+                android:textSize="18sp"
+                android:textColor="#333"
+                android:layout_marginBottom="4dp"/>
 
-        <!-- Logout Button -->
-        <Button
-            android:id="@+id/btn_logout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:text="@string/logout" />
-    </LinearLayout>
-</ScrollView>
+            <TextView
+                android:id="@+id/profileName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Alok Sharma"
+                android:textSize="16sp"
+                android:textColor="#333"
+                android:drawableStart="@drawable/baseline_person_24"
+                android:importantForAccessibility="yes"
+                android:layout_marginBottom="16dp"/>
+
+            <!-- Editable Email -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Email"
+                android:textSize="18sp"
+                android:textColor="#333"
+                android:layout_marginBottom="4dp"/>
+
+            <TextView
+                android:id="@+id/profileEmail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="demo.doe@example.com"
+                android:textSize="16sp"
+                android:textColor="#666"
+                android:layout_marginBottom="16dp"
+                android:drawableStart="@drawable/baseline_email_24"
+                 android:importantForAccessibility="yes"/>
+
+            <!-- Editable Phone -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Phone"
+                android:textSize="18sp"
+                android:textColor="#333"
+                android:layout_marginBottom="4dp"/>
+
+            <TextView
+                android:id="@+id/profilePhone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="+1234567890"
+                android:textSize="16sp"
+                android:textColor="#666"
+                android:layout_marginBottom="16dp"
+                android:drawableStart="@drawable/baseline_phone_24"
+                android:importantForAccessibility="no"/>
+
+            <!-- Editable Address -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Address"
+                android:textSize="18sp"
+                android:textColor="#333"
+                android:layout_marginBottom="4dp"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="16dp"
+                android:gravity="start">
+
+                <TextView
+                    android:id="@+id/profileAddress"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="123 Main Street, City, Country"
+                    android:textSize="16sp"
+                    android:textColor="#666"
+                    android:ellipsize="end"
+                    android:maxLines="1" />
+
+                <ImageView
+                    android:id="@+id/editAddressIcon"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/baseline_edit_24"
+                    android:layout_gravity="center_vertical"
+                    android:clickable="true"
+                    android:focusable="true"
+                    app:tint="#0288D1" />
+
+            </LinearLayout>
+
+            <!-- TextView to trigger Edit Profile -->
+           <!-- <TextView
+                android:id="@+id/editProfileText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Edit Profile"
+                android:textSize="16sp"
+                android:textColor="#0288D1"
+                android:layout_marginBottom="16dp"
+                android:layout_gravity="end"/>-->
+
+            <!-- Logout Button -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/logoutButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Logout"
+                app:backgroundTint="#D32F2F"
+                android:textColor="#FFFFFF"
+                app:cornerRadius="12dp"
+                android:padding="10dp"
+                android:textSize="15sp"
+                android:layout_marginBottom="10dp"/>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>

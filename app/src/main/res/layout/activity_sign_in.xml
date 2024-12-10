@@ -1,120 +1,132 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
+    android:padding="16dp"
     tools:context=".SignIn">
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
 
         <LinearLayout
-            android:id="@+id/l2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="40dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginEnd="40dp"
-            android:layout_marginBottom="15dp"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:paddingHorizontal="24dp"
+            android:paddingVertical="16dp">
 
             <ImageView
                 android:id="@+id/imageView11"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="8dp"
                 android:contentDescription="@string/logo_description"
-                app:srcCompat="@drawable/fdl" />
+                android:src="@drawable/fdl"
+                android:layout_marginBottom="16dp" />
 
             <TextView
                 android:id="@+id/cafehouse"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="30dp"
-                android:fontFamily="cursive"
                 android:gravity="center"
-                android:padding="8dp"
                 android:text="@string/app_name"
+                android:textSize="60sp"
                 android:textColor="@color/tintlogocolor"
-                android:textSize="60sp" />
+                android:fontFamily="cursive"
+                android:layout_marginBottom="32dp" />
 
             <EditText
                 android:id="@+id/editTextTextEmailAddress"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="20dp"
-                android:background="@drawable/backgroundeditview"
-                android:ems="10"
-                android:gravity="center"
+                android:layout_marginBottom="16dp"
                 android:hint="@string/email_hint"
                 android:inputType="textEmailAddress"
-                android:padding="10dp" />
+                android:padding="12dp"
+                android:drawableStart="@drawable/baseline_email_24"
+                android:background="@drawable/backgroundeditview"
+                android:importantForAccessibility="yes" />
 
             <EditText
                 android:id="@+id/editTextTextPassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="20dp"
-                android:background="@drawable/backgroundeditview"
-                android:ems="10"
-                android:gravity="center"
-                android:hint="@string/password_hint"
+                android:hint="Password"
                 android:inputType="textPassword"
-                android:padding="10dp" />
+                android:drawableEnd="@drawable/baseline_visibility_off_24"
+                android:drawablePadding="8dp"
+                android:padding="12dp"
+                android:background="@drawable/backgroundeditview"
+                android:layout_marginBottom="16dp" />
 
             <Button
                 android:id="@+id/buttonsignin"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="20dp"
-                android:background="@drawable/btn_gradientbright"
                 android:text="@string/sign_in"
                 android:textColor="@color/white"
-                android:textSize="18sp" />
+                android:background="@drawable/btn_gradientbright"
+                android:layout_marginBottom="16dp" />
+
+            <ProgressBar
+                android:id="@+id/progressBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:layout_gravity="center"
+                android:layout_marginBottom="16dp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="20dp"
+                android:orientation="horizontal"
                 android:gravity="center"
-                android:orientation="horizontal">
+                android:layout_marginBottom="16dp">
 
                 <View
                     android:layout_width="50dp"
                     android:layout_height="1dp"
-                    android:layout_marginEnd="5dp"
-                    android:background="@color/startcolorgradient" />
+                    android:background="@color/startcolorgradient"
+                    android:layout_marginEnd="8dp" />
 
                 <TextView
-                    android:id="@+id/forgottxt"
+                    android:id="@+id/adminlogin"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Forgot"
-                    android:gravity="center"
-                    android:padding="8dp"
-                    android:textColor="#2F82EA"
-                    android:textSize="20sp"/>
+                    android:text="Admin Login"
+                    android:textColor="@color/ripple_dark"
+                    android:textSize="14sp" />
 
                 <View
                     android:layout_width="50dp"
                     android:layout_height="1dp"
-                    android:layout_marginStart="5dp"
-                    android:background="@color/startcolorgradient" />
-
+                    android:background="@color/startcolorgradient"
+                    android:layout_marginStart="8dp" />
             </LinearLayout>
+
+            <TextView
+                android:id="@+id/forgottxt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/forgot"
+                android:textColor="#2F82EA"
+                android:layout_gravity="center"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:layout_marginBottom="24dp" />
 
             <TextView
                 android:id="@+id/tvSignup"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="30dp"
                 android:gravity="center"
                 android:text="@string/create_account_prompt"
                 android:textColor="#2F82EA"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:textSize="18sp" />
 
         </LinearLayout>
 

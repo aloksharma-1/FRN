@@ -1,6 +1,7 @@
 package com.alokdev21.foodapk;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.os.Bundle;
@@ -24,8 +25,7 @@ public class Home extends AppCompatActivity {
         ViewPagerAdapter adapter = new ViewPagerAdapter(this);
         ViewPager.setAdapter(adapter);
 
-        // Sync BottomNavigationView with ViewPager2
-        bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
+        bottomNavigationView.setOnItemSelectedListener(item -> {
             int id = item.getItemId();
 
             if (id == R.id.nav_menu) {
@@ -38,7 +38,6 @@ public class Home extends AppCompatActivity {
 
             return true;
         });
-
         // Sync ViewPager2 with BottomNavigationView
         ViewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
             @Override

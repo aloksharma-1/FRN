@@ -6,81 +6,146 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
-
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.DocumentReference;
+import com.squareup.picasso.Picasso;
 
 public class Profile_fragment extends Fragment {
-
-    private ImageView profileImage;
-    private TextView tvUserName, tvUserEmail, tvUserPhone;
-    private Button btnLogout;
-
+    private TextView profileName, profileEmail, profilePhone, profileAddress;
+    private ImageView profilePicture, editAddressIcon;
+    private Button logoutButton;
     private FirebaseAuth mAuth;
-    private FirebaseFirestore firestore;
+    private FirebaseFirestore db;
 
-    @Nullable
+    public Profile_fragment() {
+        // Required empty public constructor
+    }
+
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.profile_fragment, container, false);
 
-        // Initialize Firebase components
+        // Initialize Firebase instances
         mAuth = FirebaseAuth.getInstance();
-        firestore = FirebaseFirestore.getInstance();
+        db = FirebaseFirestore.getInstance();
 
-        // Initialize UI components
-        profileImage = view.findViewById(R.id.profile_image);
-        tvUserName = view.findViewById(R.id.tv_user_name);
-        tvUserEmail = view.findViewById(R.id.tv_user_email);
-        tvUserPhone = view.findViewById(R.id.tv_user_phone);
-        btnLogout = view.findViewById(R.id.btn_logout);
+        // Initialize UI elements
+        profileName = view.findViewById(R.id.profileName);
+        profileEmail = view.findViewById(R.id.profileEmail);
+        profilePhone = view.findViewById(R.id.profilePhone);
+        profileAddress = view.findViewById(R.id.profileAddress);
+        profilePicture = view.findViewById(R.id.profile_image);
+        logoutButton = view.findViewById(R.id.logoutButton);
+        editAddressIcon = view.findViewById(R.id.editAddressIcon);
 
-        // Load user data
-        loadUserData();
+        // Check if the user is authenticated
+        if (mAuth.getCurrentUser() != null) {
+            String userId = mAuth.getCurrentUser().getUid();
+            DocumentReference userRef = db.collection("users").document(userId);
 
-        // Set logout functionality
-        btnLogout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                logoutUser();
-            }
-        });
+            // Fetch user data from Firestore
+            userRef.get().addOnCompleteListener(task -> {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+                        // Extract data from the document
+                        String name = document.getString("name");
+                        String email = document.getString("email");
+                        String phone = document.getString("phone");
+                        String address = document.getString("address");
+                        String profileImageUrl = document.getString("profileImageUrl");
+
+                        // Set data to the UI elements
+                        profileName.setText(name);
+                        profileEmail.setText(email);
+                        profilePhone.setText("+91" + " " +phone);
+                        profileAddress.setText((address != null ? address : "Not provided"));
+
+                        // Load profile picture if available
+                        if (profileImageUrl != null && !profileImageUrl.isEmpty()) {
+                            Picasso.get().load(profileImageUrl).into(profilePicture);
+                        } else {
+                            profilePicture.setImageResource(R.drawable.profile); // Placeholder image
+                        }
+                    } else {
+                        Toast.makeText(getContext(), "No such document found", Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    Toast.makeText(getContext(), "Failed to fetch data: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            });
+        } else {
+            Toast.makeText(getContext(), "User not logged in", Toast.LENGTH_SHORT).show();
+            // Optionally redirect the user to a login activity
+        }
+
+        // Set up button click listeners
+        setUpButtonListeners();
 
         return view;
     }
 
-    private void loadUserData() {
-        FirebaseUser user = mAuth.getCurrentUser();
+    private void setUpButtonListeners() {
+        logoutButton.setOnClickListener(v -> {
+            // Log out the user and show a toast message
+            FirebaseAuth.getInstance().signOut();
+            Toast.makeText(getContext(), "Logging out Successfully", Toast.LENGTH_SHORT).show();
 
-        if (user != null) {
-            String userId = user.getUid();
-            firestore.collection("users").document(userId).get()
-                    .addOnCompleteListener(task -> {
-                        if (task.isSuccessful() && task.getResult() != null) {
-                            DocumentSnapshot document = task.getResult();
-                            tvUserName.setText(document.getString("name"));
-                            tvUserEmail.setText(document.getString("email"));
-                            tvUserPhone.setText(document.getString("phone"));
-                        } else {
-                            Toast.makeText(getContext(), "Failed to load user data", Toast.LENGTH_SHORT).show();
-                        }
-                    });
-        }
+            // Redirect to SignIn activity after logout is complete
+            getActivity().finish(); // Close the current activity
+            Intent intent = new Intent(getActivity(), SignIn.class); // Replace with your SignIn activity class name
+            startActivity(intent);
+        });
+
+        // Set up the edit icon click listener for the address
+        editAddressIcon.setOnClickListener(v -> {
+            showEditAddressDialog();
+        });
     }
 
-    private void logoutUser() {
-        mAuth.signOut();
-        Intent intent = new Intent(getActivity(), SignIn.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(intent);
+    private void showEditAddressDialog() {
+        // Create a dialog for address editing
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setTitle("Edit Address");
+
+        // Create an EditText for manual input
+        EditText input = new EditText(getContext());
+        input.setText(profileAddress.getText().toString());
+        builder.setView(input);
+
+        // Set up dialog buttons
+        builder.setPositiveButton("Save", (dialog, which) -> {
+            String newAddress = input.getText().toString().trim();
+            if (!newAddress.isEmpty()) {
+                // Update the UI and Firestore database with the new address
+                profileAddress.setText(newAddress);
+                updateAddressInFirestore(newAddress);
+            } else {
+                Toast.makeText(getContext(), "Address cannot be empty", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        builder.setNegativeButton("Cancel", (dialog, which) -> dialog.cancel());
+
+        builder.show();
+    }
+
+    private void updateAddressInFirestore(String newAddress) {
+        String userId = mAuth.getCurrentUser().getUid();
+        DocumentReference userRef = db.collection("users").document(userId);
+
+        // Update the address field in Firestore
+        userRef.update("address", newAddress)
+                .addOnSuccessListener(aVoid -> Toast.makeText(getContext(), "Address updated successfully", Toast.LENGTH_SHORT).show())
+                .addOnFailureListener(e -> Toast.makeText(getContext(), "Failed to update address: " + e.getMessage(), Toast.LENGTH_SHORT).show());
     }
 }

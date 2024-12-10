@@ -1,11 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
+    <!-- Permissions for accessing location data -->
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="false" />
+
+
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
-
+    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" /> <!-- Permissions for internet access -->
+    <uses-permission android:name="android.permission.INTERNET" /> <!-- Permissions for accessing external storage -->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"
+        android:maxSdkVersion="32" />
+    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
+    <uses-permission android:name="android.permission.READ_MEDIA_VIDEO" />
+    <uses-permission android:name="android.permission.READ_MEDIA_AUDIO" /> <!-- Other permissions as needed -->
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        android:maxSdkVersion="32" />
 
     <application
         android:allowBackup="true"
@@ -16,14 +29,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.FoodAPK"
-        tools:targetApi="31">
+        tools:targetApi="33">
         <activity
-            android:name=".demo1"
-            android:exported="false" />
+            android:name=".LocationActivity"
+            android:exported="false">
+
+        </activity>
         <activity
-            android:name=".Forgot"
-            android:exported="false" />
-        <activity android:name=".Home" />
+            android:name=".DashboardActivity"
+            android:exported="false" /> <!-- Main activity (SignIn) -->
         <activity
             android:name=".SignIn"
             android:exported="true">
@@ -32,8 +46,22 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-        <activity android:name=".SignUp" />
+        </activity> <!-- SignUp activity -->
+        <activity
+            android:name=".SignUp"
+            android:exported="false" /> <!-- Home activity -->
+        <activity
+            android:name=".Home"
+            android:exported="false" /> <!-- Forgot password activity -->
+        <activity
+            android:name=".Forgot"
+            android:exported="false" />
+
+
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/google_maps_key" />
     </application>
 
 </manifest>

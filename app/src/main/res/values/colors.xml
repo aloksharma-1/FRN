@@ -15,6 +15,20 @@
     <color name="fbcolor">#3c62ac</color>
     <color name="googlecolor">#db4a39</color>
     <color name="tintlogocolor">#AC7A4A</color>
+    <color name="teal_500">#009688</color>
 
+    <color name="primary_dark">#121212</color> <!-- Dark background -->
+    <color name="primary_variant_dark">#1D1D1D</color> <!-- Slightly lighter than primary -->
+    <color name="secondary_dark">#1E88E5</color> <!-- Vibrant blue for highlights -->
+    <color name="secondary_variant_dark">#1565C0</color> <!-- Darker blue variant -->
+    <color name="text_secondary_dark">#B0B0B0</color> <!-- For secondary text -->
+    <color name="ripple_dark">#757575</color> <!-- Ripple effect color -->
+    <color name="divider_dark">#333333</color> <!-- Divider color for clear separation -->
+
+
+    <color name="gray_light">#BDBDBD</color> <!-- Secondary text color -->
+
+    <color name="snackbar_error">#D32F2F</color> <!-- Red for error -->
+    <color name="snackbar_success">#388E3C</color>
 
 </resources>

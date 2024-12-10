@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="24dp"
+    android:background="#FAFAFA"
+    tools:context=".LocationActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:clipToPadding="false">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingHorizontal="24dp"
+            android:paddingVertical="16dp">
+
+            <!-- Map Fragment inside a Card -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="24dp"
+                app:cardElevation="8dp"
+                app:cardCornerRadius="16dp"
+                android:backgroundTint="#FFFFFF">
+
+                <fragment
+                    android:id="@+id/map"
+                    android:name="com.google.android.gms.maps.SupportMapFragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="350dp"
+                    android:contentDescription="Google Map" />
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- EditText for Custom Location wrapped with TextInputLayout -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="16dp"
+                android:hint="Enter custom location">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/editCustomLocation"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="12dp"
+                    android:textColor="#333333"
+                    android:textSize="16sp"
+                    android:backgroundTint="#998484"
+                    android:layout_marginBottom="8dp"
+                    android:importantForAccessibility="yes"
+                    android:contentDescription="Enter custom location" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- Buttons in Horizontal Layout -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <!-- Get Address Button -->
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnGetAddress"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Get Address"
+                    android:textColor="@android:color/white"
+                    android:layout_marginEnd="16dp"
+                    style="@style/Widget.MaterialComponents.Button"
+                    app:backgroundTint="#998484"
+                    android:background="@drawable/btn_gradientbright" />
+
+                <!-- Floating Action Button for Next -->
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/btnNext"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/baseline_navigate_next_24"
+                    android:tint="@android:color/white"
+                    android:background="@drawable/btn_gradientbright"
+                    app:backgroundTint="#998484"
+                    android:contentDescription="Next Button" />
+
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>
